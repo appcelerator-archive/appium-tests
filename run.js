@@ -11,30 +11,24 @@
 		},
 		tests: {
 			ios: {
-				desiredCapability: {
+				desiredCapabilities: {
 					automationName: 'XCUITest',
 					noReset: true
 				},
 				pool: [
 					{
-						deviceInfo: {
-							platformName: 'iOS',
-							deviceName: 'iPhone 7 Plus',
-							platformVersion: '10.2',
-						},
-						appInfo: [
+						suite: 'Button',
+						app: 'Button.app',
+						deviceInfo: [
 							{
-								app: '/Users/wluu/github/qe-appium/KitchenSink/build/iphone/build/Products/Debug-iphonesimulator/KitchenSink.app',
-								suite: [
-									'Button',
-									'TextView',
-									etc ...
-								]
+								platformName: 'iOS', (NOTE: don't need this in config.js; sepcify later)
+								deviceName: 'iPhone 7 Plus',
+								platformVersion: '10.2',
 							},
-							etc. other apps ...
+							etc ...
 						]
 					},
-					etc ...
+					etc other suites...
 				]
 			},
 			android: {
