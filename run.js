@@ -2,6 +2,7 @@
 
 const
 	Setup = require('./lib/setup.js'),
+	Helper = require('./lib/helper.js'),
 	TestConfig = require('./test_config.js');
 
 // argument passed into the script
@@ -13,6 +14,9 @@ if (arg) {
 			- <target test> is relative to the "test" directory; don't need to include test in the parameter
 			- <target test> should be comma delimited for multiple suites
 	*/
+	const
+		suitePaths = Helper.suitesExists(arg),
+		suitePlatformPairs = Helper.validPlatforms(suitePaths);
 }
 else if (arg === undefined) {
 	// if running "node run.js", then string all the information together from config.js and run all the tests

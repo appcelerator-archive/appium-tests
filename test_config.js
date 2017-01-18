@@ -16,19 +16,16 @@ module.exports = {
 				automationName: 'XCUITest',
 				noReset: true
 			},
-			pool: [
-				{
-					suite: 'Slider',
-					app: 'KitchenSink.app',
-					testDevices: [
-						{
-							// these are simulators
-							deviceName: 'iPhone 7 Plus',
-							platformVersion: '10.2'
-						}
-					]
-				}
-			]
+			Slider: {
+				app: 'KitchenSink.app',
+				testDevices: [
+					{
+						// these are simulators
+						deviceName: 'iPhone 7 Plus',
+						platformVersion: '10.2'
+					}
+				]
+			}
 		},
 
 		android: {
@@ -36,21 +33,18 @@ module.exports = {
 				automationName: 'Appium',
 				noReset: true
 			},
-			pool: [
-				{
-					suite: 'Slider',
-					app: 'KitchenSink.apk',
-					testDevices: [
-						{
-							// genymotion emulator
-							deviceName: '192.168.56.101:5555',
-							platformVersion: '6.0',
-							appPackage: 'com.appcelerator.kitchensink',
-							appActivity: '.KitchensinkActivity'
-						}
-					]
-				}
-			]
+			Slider: {
+				app: 'KitchenSink.apk',
+				testDevices: [
+					{
+						// genymotion emulator
+						deviceName: '192.168.56.101:5555',
+						platformVersion: '6.0',
+						appPackage: 'com.appcelerator.kitchensink',
+						appActivity: '.KitchensinkActivity'
+					}
+				]
+			}
 		}
 	}
 };
