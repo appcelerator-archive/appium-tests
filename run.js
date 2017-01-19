@@ -7,7 +7,10 @@ const
 
 const Mocha = require('mocha');
 
-const setup = new Setup();
+const
+	/* jshint -W079 */
+	setup = new Setup(),
+	mocha = new Mocha();
 
 // these will be accessed in the mocha tests
 global.driver = setup.appiumServer(TestConfig.server);
@@ -16,15 +19,12 @@ global.webdriver = setup.getWd();
 // argument passed into the script
 const arg = process.argv[2];
 if (arg) {
-	const
-		suitePaths = Help.createSuitePaths(arg),
-		suitePlatformPairs = Help.createSPs(suitePaths),
-		desires = Help.createDesires(suitePlatformPairs, TestConfig.tests);
+	const tests = Help.createTests(arg, TestConfig.tests);
 
 	let p = Promise.resolve();
-	desires.forEach(cap => {
+	tests.forEach(test => {
 		p = p.then(() => {
-			return setup.startClient(cap, true);
+			return setup.startClient(test.cap, true);
 		})
 		.then(() => {
 			return new Promise((resolve, reject) => {

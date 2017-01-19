@@ -1,38 +1,34 @@
 'use strict';
 
-const Setup = require('../lib/setup.js');
+const
+	driver = global.driver,
+	webdriver = global.webdriver;
 
-const s = new Setup();
-
-let
-	driver = null,
-	webdriver = null;
-
-before('suite setup', function () {
-	// the webdriver takes a while to setup; mocha timeout is set to 5 minutes
-	this.timeout(300000);
-
-	driver = s.appiumServer({
-		host: 'localhost',
-		port: 4723
-	}, false);
-
-	webdriver = s.getWd();
-
-	// specify target test app and ios simulator
-	return s.startClient({
-		automationName: 'XCUITest',
-		platformName: 'iOS',
-		deviceName: 'iPhone 7 Plus',
-		platformVersion: '10.2',
-		app: '/Users/wluu/github/qe-appium/KitchenSink/build/iphone/build/Products/Debug-iphonesimulator/KitchenSink.app',
-		noReset: true // doesn't kill the simulator
-	});
-});
-
-after('suite teardown', function () {
-	return s.stopClient();
-});
+// before('suite setup', function () {
+// 	// the webdriver takes a while to setup; mocha timeout is set to 5 minutes
+// 	this.timeout(300000);
+//
+// 	driver = s.appiumServer({
+// 		host: 'localhost',
+// 		port: 4723
+// 	}, false);
+//
+// 	webdriver = s.getWd();
+//
+// 	// specify target test app and ios simulator
+// 	return s.startClient({
+// 		automationName: 'XCUITest',
+// 		platformName: 'iOS',
+// 		deviceName: 'iPhone 7 Plus',
+// 		platformVersion: '10.2',
+// 		app: '/Users/wluu/github/qe-appium/KitchenSink/build/iphone/build/Products/Debug-iphonesimulator/KitchenSink.app',
+// 		noReset: true // doesn't kill the simulator
+// 	});
+// });
+//
+// after('suite teardown', function () {
+// 	return s.stopClient();
+// });
 
 // Controls > Slider > Basic
 describe('KS iOS Slider', function () {
