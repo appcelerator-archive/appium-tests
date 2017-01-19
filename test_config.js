@@ -19,10 +19,14 @@ module.exports = {
 			Slider: {
 				app: 'KitchenSink.app',
 				testDevices: [
+					// these are simulators
 					{
-						// these are simulators
 						deviceName: 'iPhone 7 Plus',
 						platformVersion: '10.2'
+					},
+					{
+						deviceName: 'iPhone 7',
+						platformVersion: '10.1'
 					}
 				]
 			}
@@ -35,13 +39,13 @@ module.exports = {
 			},
 			Slider: {
 				app: 'KitchenSink.apk',
+				appPackage: 'com.appcelerator.kitchensink',
+				appActivity: '.KitchensinkActivity',
 				testDevices: [
 					{
 						// genymotion emulator
 						deviceName: '192.168.56.101:5555',
-						platformVersion: '6.0',
-						appPackage: 'com.appcelerator.kitchensink',
-						appActivity: '.KitchensinkActivity'
+						platformVersion: '6.0'
 					}
 				]
 			}
