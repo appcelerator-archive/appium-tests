@@ -7,6 +7,9 @@ const
 
 const Mocha = require('mocha');
 
+// argument passed into the script
+const suiteArg = process.argv[2];
+
 /* jshint -W079 */
 const setup = new Setup();
 
@@ -14,18 +17,19 @@ const setup = new Setup();
 global.driver = setup.appiumServer(TestConfig.server);
 global.webdriver = setup.getWd();
 
-// argument passed into the script
-const suiteArg = process.argv[2];
+let
+	p = null, // will become a promise chain
+	ranAlready = '',
+	appiumProc = null; // will be assigned a ChildProcess object
 
-const tests = Help.createTests(suiteArg, TestConfig.tests);
-
-let ranAlready = '';
+p = new Promise((resolve, reject) => {
+	appiumProc = Help.runAppium(TestConfig.server, resolve);
+});
 
 // the main logic that's running the tests
-let p = Promise.resolve();
-tests.forEach(test => {
+Help.createTests(suiteArg, TestConfig.tests).forEach(test => {
 	p = p.then(() => {
-		return setup.startClient(test.cap, true);
+		return setup.startClient(test.cap, false);
 	})
 	.then(() => {
 		return new Promise((resolve, reject) => {
@@ -52,11 +56,16 @@ tests.forEach(test => {
 	})
 	.then(() => {
 		return setup.stopClient();
-	})
-	.catch(err => {
-		console.log(err.stack);
-		process.exit(1);
 	});
+});
+
+p.then(() => {
+	// kills the local appium server
+	appiumProc.kill();
+})
+.catch(err => {
+	console.log(err.stack);
+	process.exit(1);
 });
 
 /*
