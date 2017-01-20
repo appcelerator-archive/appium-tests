@@ -1,44 +1,8 @@
 'use strict';
 
-const Setup = require('../helpers/setup.js');
-
-let
-	driver = null,
-	webdriver = null;
-
-before('suite setup', function () {
-	// the webdriver takes a while to setup; mocha timeout is set to 5 minutes
-	this.timeout(300000);
-
-	const setup = new Setup();
-
-	webdriver = setup.getWd();
-
-	// appium local server
-	driver = webdriver.promiseChainRemote({
-		host: 'localhost',
-		port: 4723
-	});
-
-	// turn on logging for the driver
-	setup.logging(driver);
-
-	// specify target test app and ios simulator
-	return driver.init({
-		automationName: 'Appium',
-		platformName: 'Android',
-		platformVersion: '6.0',
-		deviceName: '192.168.56.101:5555',
-		app: '/Users/wluu/github/qe-appium/KitchenSink/build/android/bin/KitchenSink.apk',
-		appPackage: 'com.appcelerator.kitchensink',
-		appActivity: '.KitchensinkActivity',
-		noReset: true // doesn't kill the emulator
-	});
-});
-
-after('suite teardown', function () {
-	return driver.quit();
-});
+const
+	driver = global.driver,
+	webdriver = global.webdriver;
 
 // Controls > Slider > Basic
 describe('KS Android Slider', function () {
