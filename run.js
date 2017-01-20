@@ -15,50 +15,49 @@ global.driver = setup.appiumServer(TestConfig.server);
 global.webdriver = setup.getWd();
 
 // argument passed into the script
-const arg = process.argv[2];
-if (arg) {
-	const tests = Help.createTests(arg, TestConfig.tests);
+const suiteArg = process.argv[2];
 
-	let ranAlready = '';
+const tests = Help.createTests(suiteArg, TestConfig.tests);
 
-	let p = Promise.resolve();
-	tests.forEach(test => {
-		p = p.then(() => {
-			return setup.startClient(test.cap, true);
-		})
-		.then(() => {
-			return new Promise((resolve, reject) => {
-				// grrrrr, can't run the same test suite twice in mocha; need to apply this workaround
-				// https://github.com/mochajs/mocha/issues/995
-				if (ranAlready === test.suite) {
-					Object.keys(require.cache).forEach(file => {
-						// seems safe: http://stackoverflow.com/a/11477602
-						delete require.cache[file];
-					});
+let ranAlready = '';
+
+// the main logic that's running the tests
+let p = Promise.resolve();
+tests.forEach(test => {
+	p = p.then(() => {
+		return setup.startClient(test.cap, true);
+	})
+	.then(() => {
+		return new Promise((resolve, reject) => {
+			// grrrrr, can't run the same test suite twice in mocha; need to apply this workaround
+			// https://github.com/mochajs/mocha/issues/995
+			if (ranAlready === test.suite) {
+				for (let file in require.cache) {
+					// seems safe: http://stackoverflow.com/a/11477602
+					delete require.cache[file];
 				}
-				ranAlready = test.suite;
+			}
+			ranAlready = test.suite;
 
-				new Mocha({
-					useColors: false,
-					fullStackTrace: true
-				})
-				.addFile(test.suite)
-				.run(failures => {
-					resolve();
-				});
+			// this is also part of the above workaround
+			new Mocha({
+				useColors: false,
+				fullStackTrace: true
+			})
+			.addFile(test.suite)
+			.run(failures => {
+				resolve();
 			});
-		})
-		.then(() => {
-			return setup.stopClient();
-		})
-		.catch(err => {
-			console.log(err.stack);
 		});
+	})
+	.then(() => {
+		return setup.stopClient();
+	})
+	.catch(err => {
+		console.log(err.stack);
+		process.exit(1);
 	});
-}
-else if (arg === undefined) {
-	// if running "node run.js", then string all the information together from config.js and run all the tests
-}
+});
 
 /*
 	TODO: start appium server in the background
