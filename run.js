@@ -7,10 +7,8 @@ const
 
 const Mocha = require('mocha');
 
-const
-	/* jshint -W079 */
-	setup = new Setup(),
-	mocha = new Mocha();
+/* jshint -W079 */
+const setup = new Setup();
 
 // these will be accessed in the mocha tests
 global.driver = setup.appiumServer(TestConfig.server);
@@ -21,6 +19,8 @@ const arg = process.argv[2];
 if (arg) {
 	const tests = Help.createTests(arg, TestConfig.tests);
 
+	let ranAlready = '';
+
 	let p = Promise.resolve();
 	tests.forEach(test => {
 		p = p.then(() => {
@@ -28,11 +28,31 @@ if (arg) {
 		})
 		.then(() => {
 			return new Promise((resolve, reject) => {
-				setTimeout(resolve, 1000);
+				// grrrrr, can't run the same test suite twice in mocha; need to apply this workaround
+				// https://github.com/mochajs/mocha/issues/995
+				if (ranAlready === test.suite) {
+					Object.keys(require.cache).forEach(file => {
+						// seems safe: http://stackoverflow.com/a/11477602
+						delete require.cache[file];
+					});
+				}
+				ranAlready = test.suite;
+
+				new Mocha({
+					useColors: false,
+					fullStackTrace: true
+				})
+				.addFile(test.suite)
+				.run(failures => {
+					resolve();
+				});
 			});
 		})
 		.then(() => {
 			return setup.stopClient();
+		})
+		.catch(err => {
+			console.log(err.stack);
 		});
 	});
 }
