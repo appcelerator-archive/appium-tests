@@ -29,6 +29,7 @@ p = new Promise((resolve, reject) => {
 // the main logic that's running the tests
 Help.createTests(suiteArg, TestConfig.tests).forEach(test => {
 	p = p.then(() => {
+		console.log(`Installing ${test.cap.app} to ${test.cap.deviceName} ...`);
 		return setup.startClient(test.cap, false);
 	})
 	.then(() => {
@@ -60,6 +61,8 @@ Help.createTests(suiteArg, TestConfig.tests).forEach(test => {
 });
 
 p.then(() => {
+	console.log('Done running tests.');
+
 	// kills the local appium server
 	appiumProc.kill();
 })
