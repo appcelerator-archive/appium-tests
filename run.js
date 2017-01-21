@@ -70,12 +70,3 @@ p.then(() => {
 	console.log(err.stack);
 	process.exit(1);
 });
-
-/*
-	TODO: start appium server in the background
-
-	start loop of specified tests
-		TODO: build associated test app with specified sdk
-		start the setup
-		run target test
-*/
