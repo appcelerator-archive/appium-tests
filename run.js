@@ -15,7 +15,8 @@ const
 	argument value passed to the script.
 */
 Program
-	.option('-s, --suites <suites>', 'comma-delimited string of valid test suites; otherwise, run all tests')
+	.option('--suites <suites>', 'comma-delimited string of valid test suites; otherwise, run all tests')
+	.option('--use-sdk <ti_sdk>', 'build all test apps with the specified Titanium SDK')
 	.option('--more-logs', 'enables appium logging; this becomes very noisy')
 	.parse(process.argv);
 

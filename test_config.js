@@ -17,7 +17,7 @@ module.exports = {
 				noReset: true
 			},
 			Slider: {
-				app: 'KitchenSink.app',
+				proj: 'KitchenSink',
 				testDevices: [
 					// these are simulators
 					{
@@ -38,7 +38,7 @@ module.exports = {
 				noReset: true
 			},
 			Slider: {
-				app: 'KitchenSink.apk',
+				proj: 'KitchenSink',
 				appPackage: 'com.appcelerator.kitchensink',
 				appActivity: '.KitchensinkActivity',
 				testDevices: [
