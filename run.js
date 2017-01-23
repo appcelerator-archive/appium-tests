@@ -5,10 +5,19 @@ const
 	Help = require('./lib/help_run.js'),
 	TestConfig = require('./test_config.js');
 
-const Mocha = require('mocha');
+const
+	Mocha = require('mocha'),
+	Program = require('commander');
 
-// argument passed into the script
-const suiteArg = process.argv[2];
+/*
+	NOTE: this is not explicitly stated in commander docs, but the angle brackets
+	need to be specified in the flags argument, i.e. <suites>, in order to get the
+	argument value passed to the script.
+*/
+Program
+	.option('-s, --suites <suites>', 'comma-delimited string of valid test suites; otherwise, run all tests')
+	.option('--more-logs', 'enables appium logging; this becomes very noisy')
+	.parse(process.argv);
 
 /* jshint -W079 */
 const setup = new Setup();
@@ -23,14 +32,15 @@ let
 	appiumProc = null; // will be assigned a ChildProcess object
 
 p = new Promise((resolve, reject) => {
+	// start the local appium server
 	appiumProc = Help.runAppium(TestConfig.server, resolve);
 });
 
 // the main logic that's running the tests
-Help.createTests(suiteArg, TestConfig.tests).forEach(test => {
+Help.createTests(Program.suites, TestConfig.tests).forEach(test => {
 	p = p.then(() => {
 		console.log(`Installing ${test.cap.app} to ${test.cap.deviceName} ...`);
-		return setup.startClient(test.cap, false);
+		return setup.startClient(test.cap, Program.moreLogs);
 	})
 	.then(() => {
 		return new Promise((resolve, reject) => {
@@ -56,6 +66,7 @@ Help.createTests(suiteArg, TestConfig.tests).forEach(test => {
 		});
 	})
 	.then(() => {
+		// sever the connection between the client device and appium server
 		return setup.stopClient();
 	});
 });
