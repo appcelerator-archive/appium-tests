@@ -3,7 +3,7 @@
 const
 	Setup = require('./lib/setup_appium.js'),
 	Help = require('./lib/help_run.js'),
-	TestConfig = require('./test_config.js');
+	ConfigServer = require('./test_config.js').server;
 
 const
 	Mocha = require('mocha'),
@@ -24,7 +24,7 @@ Program
 const setup = new Setup();
 
 // these will be accessed in the mocha tests
-global.driver = setup.appiumServer(TestConfig.server);
+global.driver = setup.appiumServer(ConfigServer);
 global.webdriver = setup.getWd();
 
 let
@@ -34,11 +34,11 @@ let
 
 p = new Promise((resolve, reject) => {
 	// start the local appium server
-	appiumProc = Help.runAppium(TestConfig.server, resolve);
+	appiumProc = Help.runAppium(ConfigServer, resolve);
 });
 
 // the main logic that's running the tests
-Help.createTests(Program.suites, TestConfig.tests).forEach(test => {
+Help.createTests(Help.transform(Program.suites)).forEach(test => {
 	p = p.then(() => {
 		console.log(`Installing ${test.cap.app} to ${test.cap.deviceName} ...`);
 		return setup.startClient(test.cap, Program.moreLogs);
