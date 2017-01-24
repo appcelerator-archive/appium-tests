@@ -20,6 +20,8 @@ Program
 	.option('--more-logs', 'enables appium logging; this becomes very noisy')
 	.parse(process.argv);
 
+/* main */
+
 /* jshint -W079 */
 const setup = new Setup();
 
@@ -28,23 +30,31 @@ global.driver = setup.appiumServer(ConfigServer);
 global.webdriver = setup.getWd();
 
 let
-	p = null, // will become a promise chain
 	ranAlready = '',
 	appiumProc = null; // will be assigned a ChildProcess object
 
-p = new Promise((resolve, reject) => {
+// change the comma-delimited value into something useful
+const suiteData = Help.transform(Program.suites);
+
+let p = new Promise(resolve => {
 	// start the local appium server
 	appiumProc = Help.runAppium(ConfigServer, resolve);
+})
+.then(() => {
+	return new Promise(resolve => {
+		// build all test apps using the specified titanium sdk
+		Help.buildTestApps(suiteData, Program.useSdk, resolve);
+	});
 });
 
 // the main logic that's running the tests
-Help.createTests(Help.transform(Program.suites)).forEach(test => {
+Help.createTests(suiteData).forEach(test => {
 	p = p.then(() => {
 		console.log(`Installing ${test.cap.app} to ${test.cap.deviceName} ...`);
 		return setup.startClient(test.cap, Program.moreLogs);
 	})
 	.then(() => {
-		return new Promise((resolve, reject) => {
+		return new Promise(resolve => {
 			// grrrrr, can't run the same test suite twice in mocha; need to apply this workaround
 			// https://github.com/mochajs/mocha/issues/995
 			if (ranAlready === test.suite) {
