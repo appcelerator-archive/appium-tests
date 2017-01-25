@@ -17,7 +17,7 @@ const
 Program
 	.option('--suites <suites>', 'comma-delimited string of valid test suites; otherwise, run all tests')
 	.option('--use-sdk <ti_sdk>', 'build all test apps with the specified Titanium SDK')
-	.option('--more-logs', 'enables appium logging; this becomes very noisy')
+	.option('--more-logs', 'enables more logging; this becomes very noisy')
 	.parse(process.argv);
 
 /* main */
@@ -43,7 +43,7 @@ let p = new Promise(resolve => {
 .then(() => {
 	return new Promise(resolve => {
 		// build all test apps using the specified titanium sdk
-		Help.buildTestApps(suiteData, Program.useSdk, resolve);
+		Help.buildTestApps(suiteData, Program.useSdk, Program.moreLogs, resolve);
 	});
 });
 
