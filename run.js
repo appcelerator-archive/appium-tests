@@ -54,6 +54,8 @@ Help.createTests(suiteData).forEach(test => {
 			if (test.cap.platformName !== 'Android') {
 				return resolve();
 			}
+			// need to launch the genymotion emulator first.
+			// appium won't launch it like it does for ios simulators.
 			Help.launchGeny(test.cap.deviceName, resolve);
 		});
 	})
@@ -93,6 +95,7 @@ Help.createTests(suiteData).forEach(test => {
 			if (test.cap.platformName !== 'Android') {
 				return resolve();
 			}
+			// quit the currently running genymotion emulator
 			Help.quitGeny(resolve);
 		});
 	});
