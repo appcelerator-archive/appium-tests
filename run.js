@@ -50,6 +50,14 @@ let p = new Promise(resolve => {
 // the main logic that's running the tests
 Help.createTests(suiteData).forEach(test => {
 	p = p.then(() => {
+		return new Promise(resolve => {
+			if (test.cap.platformName !== 'Android') {
+				return resolve();
+			}
+			Help.launchGeny(test.cap.deviceName, resolve);
+		});
+	})
+	.then(() => {
 		console.log(`Installing ${test.cap.app} to ${test.cap.deviceName} ...`);
 		return setup.startClient(test.cap, Program.moreLogs);
 	})
@@ -79,6 +87,14 @@ Help.createTests(suiteData).forEach(test => {
 	.then(() => {
 		// sever the connection between the client device and appium server
 		return setup.stopClient();
+	})
+	.then(() => {
+		return new Promise(resolve => {
+			if (test.cap.platformName !== 'Android') {
+				return resolve();
+			}
+			Help.quitGeny(resolve);
+		});
 	});
 });
 
