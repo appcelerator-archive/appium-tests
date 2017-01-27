@@ -50,13 +50,14 @@ let p = new Promise(resolve => {
 // the main logic that's running the tests
 Help.createTests(suiteData).forEach(test => {
 	p = p.then(() => {
-		return new Promise(resolve => {
+		return new Promise((resolve, reject) => {
 			if (test.cap.platformName !== 'Android') {
-				return resolve();
+				resolve();
+				return;
 			}
 			// need to launch the genymotion emulator first.
 			// appium won't launch it like it does for ios simulators.
-			Help.launchGeny(test.cap.deviceName, resolve);
+			Help.launchGeny(test.cap.deviceName, resolve, reject);
 		});
 	})
 	.then(() => {
@@ -93,7 +94,8 @@ Help.createTests(suiteData).forEach(test => {
 	.then(() => {
 		return new Promise(resolve => {
 			if (test.cap.platformName !== 'Android') {
-				return resolve();
+				resolve();
+				return;
 			}
 			// quit the currently running genymotion emulator
 			Help.quitGeny(resolve);
@@ -109,5 +111,7 @@ p.then(() => {
 })
 .catch(err => {
 	console.log(err.stack);
+
+	appiumProc.kill();
 	process.exit(1);
 });

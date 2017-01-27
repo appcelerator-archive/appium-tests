@@ -44,7 +44,7 @@ module.exports = {
 				testDevices: [
 					{
 						// genymotion emulator
-						deviceName: '192.168.56.101:5555',
+						deviceName: 'Custom Phone - 7.0.0 - API 24 - 768x1280',
 						platformVersion: '6.0'
 					}
 				]
