@@ -43,7 +43,10 @@ module.exports = {
 				appActivity: '.KitchensinkActivity',
 				testDevices: [
 					{
-						// genymotion emulator
+						deviceName: 'Custom Phone - 6.0.0 - API 23 - 768x1280',
+						platformVersion: '6.0'
+					},
+					{
 						deviceName: 'Custom Phone - 7.0.0 - API 24 - 768x1280',
 						platformVersion: '7.0'
 					}
