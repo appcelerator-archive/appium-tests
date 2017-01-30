@@ -45,7 +45,7 @@ module.exports = {
 					{
 						// genymotion emulator
 						deviceName: 'Custom Phone - 7.0.0 - API 24 - 768x1280',
-						platformVersion: '6.0'
+						platformVersion: '7.0'
 					}
 				]
 			}
