@@ -210,6 +210,6 @@ Couple notes about those examples vs these test suites:
   1. `launchGeny()` - if the test app needs to be tested on an Android platform, launch the designated Genymotion emulator first. iOS simulators will be launched in the next step by Appium.
   2. `startClient()` - after the simulator/genymotion is launched, install the test app to the device and connect to the Appium local server.
   3. `new Mocha().addFile().run()` - run the associated mocha test suite.
-  4. `stopClient()` - after a mocha test suite is finished running, disconnect the mobile device from the Appium local server.
+  4. `stopClient()` - after a mocha test suite is finished running, disconnect the mobile device from the Appium local server. Depending on the `desiredCapabilities`, iOS simulators can be left running or killed.
   5. `quitGeny()` - if a Genymotion emulator is launched, gracefully kill the process.
 4. `kill()` - after all the test suites are executed, kill the Appium local server.
