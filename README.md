@@ -207,7 +207,7 @@ Couple notes about those examples vs these test suites:
 1. `runAppium()` - launches the local Appium server.
 2. `buildTestApps()` - if `--use-sdk` flag is passed, then build all the test apps before moving onto the next task.
 3. `createTests()` - create a data structure from `--suites` and loop through the data structure. While looping:
-  1. `launchGeny()` - if the test app needs to be tested on an Android platform, launch the designated Genymotion emulator first. Appium can launch iOS simulators on its own.
+  1. `launchGeny()` - if the test app needs to be tested on an Android platform, launch the designated Genymotion emulator first. iOS simulators will be launched in the next step by Appium.
   2. `startClient()` - after the simulator/genymotion is launched, install the test app to the device and connect to the Appium local server.
   3. `new Mocha().addFile().run()` - run the associated mocha test suite.
   4. `stopClient()` - after a mocha test suite is finished running, disconnect the mobile device from the Appium local server.
