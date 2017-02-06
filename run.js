@@ -61,6 +61,12 @@ Help.createTests(suiteData).forEach(test => {
 		});
 	})
 	.then(() => {
+		// expose which device is being used to the test suites
+		global.curDevice = {
+			name: test.cap.deviceName,
+			ver: test.cap.platformVersion
+		};
+
 		console.log(`Installing ${test.cap.app} to ${test.cap.deviceName} ...`);
 		return setup.startClient(test.cap, Program.moreLogs);
 	})

@@ -2,7 +2,8 @@
 
 const
 	driver = global.driver,
-	webdriver = global.webdriver;
+	webdriver = global.webdriver,
+	curDevice = global.curDevice;
 
 // Controls > Slider > Basic
 describe('KS iOS Slider', function () {

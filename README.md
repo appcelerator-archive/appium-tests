@@ -198,6 +198,7 @@ To write the Appium test cases, you will need to be familiar with mocha and Prom
 Couple notes about those examples vs these test suites:
 * The `driver` and `webdriver` property is exposed to the test suite through the `global` variable.
   * Look at [ios.js](./tests/Slider/ios.js#L3-L5).
+* The `global` variable contains `curDevice` property. This has information about the current running device (`name`) and which version (`ver`).
 * You don't need a setup or teardown phase like here https://github.com/appcelerator/qe-appium/blob/master/test/ks_ios_test.js#L9-L39.
 
 # Main Loop
