@@ -35,7 +35,8 @@ module.exports = {
 		android: {
 			desiredCapabilities: {
 				automationName: 'Appium',
-				noReset: true
+				noReset: true,
+				deviceReadyTimeout: 20 // seconds
 			},
 			Slider: {
 				proj: 'KitchenSink',
