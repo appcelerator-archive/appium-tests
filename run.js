@@ -113,7 +113,7 @@ p.then(() => {
 	console.log('Done running tests.');
 
 	// kills the local appium server
-	appiumProc.kill();
+	Help.killAppium();
 })
 .catch(err => {
 	console.log(err.stack);
