@@ -3,3 +3,4 @@ tmp
 build
 .DS_Store
 *.log
+kill_geny.vbs
