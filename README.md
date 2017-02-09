@@ -4,14 +4,15 @@ Tool to run Titanium mobile tests in Appium.
 
 # Caveats
 
-* This has not been tested on a Windows machine. Only on macOS.
-  * This part needs to be vetted: https://github.com/appium/appium/blob/master/docs/en/appium-setup/running-on-windows.md
-* This has not been tested against a Windows mobile platform.
+* This has not been tested against a Windows **mobile** platform.
   * Document for Windows mobile platform (needs to be vetted): https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/windows-app-testing.md
-* Genymotion needs to be installed in the `Application` folder.
-  * Emulators need to be added to Genymotion.
-* Xcode should be installed.
-* Appc CLI should be installed and you are logged in.
+* This has been tested on Windows (with Android only) and macOS.
+  * This document is misleading when setting up on Windows: https://github.com/appium/appium/blob/master/docs/en/appium-setup/running-on-windows.md
+  * When I was setting up on Windows, Appium install was failing on python. So, just update the machine's python to 2.7.13 and ran `appium-doctor`; that's it.
+* Install VirtualBox and Genymotion with **default** settings for macOS and Windows.
+  * On macOS, install them to the Application folder.
+* Xcode should be installed on macOS.
+* Appc CLI should be installed and you are already logged in.
 
 # Setup
 
