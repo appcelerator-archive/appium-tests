@@ -214,4 +214,4 @@ Couple notes about those examples vs these test suites:
   3. `new Mocha().addFile().run()` - run the associated mocha test suite.
   4. `stopClient()` - after a mocha test suite is finished running, disconnect the mobile device from the Appium local server. Depending on the `desiredCapabilities`, iOS simulators can be left running or killed.
   5. `quitGeny()` - if a Genymotion emulator is launched, gracefully kill the process.
-4. `kill()` - after all the test suites are executed, kill the Appium local server.
+4. `killAppium()` - after all the test suites are executed, kill the Appium local server.
