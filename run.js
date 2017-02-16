@@ -111,13 +111,10 @@ Help.createTests(suiteData).forEach(test => {
 
 p.then(() => {
 	console.log('Done running tests.');
-
-	// kills the local appium server
-	Help.killAppium();
 })
 .catch(err => {
 	console.log(err.stack);
-
-	appiumProc.kill();
-	process.exit(1);
+})
+.then(() => {
+	Help.killAppium();
 });
