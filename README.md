@@ -4,8 +4,8 @@ Tool to run Titanium mobile tests in Appium.
 
 # Caveats
 
-* This has not been tested against a Windows **mobile** platform.
-  * Document for Windows mobile platform (needs to be vetted): https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/windows-app-testing.md
+* Windows 10 Mobile is not supported yet: https://github.com/Microsoft/WinAppDriver/issues/38.
+  * Document for Windows mobile platform (needs to be vetted once available): https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/windows-app-testing.md
 * This has been tested on Windows (with Android only) and macOS.
   * This document is misleading when setting up on Windows: https://github.com/appium/appium/blob/master/docs/en/appium-setup/running-on-windows.md
   * When I was setting up on Windows, Appium install was failing on python. So, just update the machine's python to 2.7.13 and run `appium-doctor`; that's it.
