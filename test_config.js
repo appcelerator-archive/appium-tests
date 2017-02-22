@@ -29,6 +29,16 @@ module.exports = {
 						platformVersion: '10.1'
 					}
 				]
+			},
+			Button: {
+				proj: 'ButtonModule',
+				testDevices: [
+					// these are simulators
+					{
+						deviceName: 'iPhone 7 Plus',
+						platformVersion: '10.2'
+					}
+				]
 			}
 		},
 
